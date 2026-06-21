@@ -1,0 +1,663 @@
+/* ═══════════════════════════════════════════════════════════════
+   TRAFFIC SENTINEL — NEO-FLAT DESIGN SYSTEM (REBRANDED)
+   Palette: Rust (#BA5A5A) · Yellow (#F7E49B) · Sage (#A4CE8B) · Teal (#86BCBD)
+   Rules: Strict Flat Design, Zero Gradients, High-Motion Micro-Interactions.
+   ═══════════════════════════════════════════════════════════════ */
+
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap');
+
+   :root {
+       /* Core Palette (Solid) */
+       --rust:    #BA5A5A;
+       --yellow:  #F7E49B;
+       --sage:    #A4CE8B;
+       --teal:    #86BCBD;
+       
+       /* Tints & Shades (Calculated via Opacity or pure hex mix for flat UI) */
+       --rust-tint:    #eed1d1;
+       --rust-dark:    #823f3f;
+       --yellow-tint:  #fdf7e1;
+       --yellow-dark:  #cca112;
+       --sage-tint:    #e4f1dc;
+       --sage-dark:    #639b43;
+       --teal-tint:    #deecec;
+       --teal-dark:    #4e8485;
+   
+       /* Neutrals & Surfaces */
+       --bg-page:      #F4F5F7;
+       --bg-card:      #FFFFFF;
+       --bg-sidebar:   #1C2331;
+       --border-main:  #CBD5E0;
+       
+       /* Text */
+       --txt-primary:  #2D3748;
+       --txt-secondary:#4A5568;
+       --txt-muted:    #718096;
+       --txt-faint:    #A0AEC0;
+       
+       /* Structural variables */
+       --flat-shadow-sm: 3px 3px 0px 0px rgba(45, 55, 72, 1);
+       --flat-shadow-md: 6px 6px 0px 0px rgba(45, 55, 72, 1);
+       --flat-shadow-hover: 9px 9px 0px 0px rgba(45, 55, 72, 1);
+       
+       --radius-card: 4px; /* Harder corners for the flat/brutalist look */
+       --radius-btn: 2px;
+       --radius-pill: 99px;
+   
+       /* Animation Speeds */
+       --t-snap: 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+       --t-fluid: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+       --t-slow: 400ms ease;
+   }
+   
+   /* ── Global Reset & Body ────────────────────────────────────────── */
+   *, *::before, *::after { box-sizing: border-box; }
+   
+   html, body, [class*="css"] {
+       font-family: 'Inter', -apple-system, sans-serif !important;
+   }
+   
+   /* Solid Background (No gradients allowed) */
+   .stApp {
+       background-color: var(--bg-page) !important;
+       background-image: none !important; 
+   }
+   
+   /* ── Custom Component Theming ────────────────────────────────────── */
+   .txt-primary { color: var(--txt-primary) !important; }
+   .txt-secondary { color: var(--txt-secondary) !important; }
+   .txt-muted { color: var(--txt-muted) !important; font-size: 13px !important; }
+   .txt-faint { color: var(--txt-faint) !important; font-size: 11px !important; }
+   .mono { font-family: 'JetBrains Mono', monospace !important; }
+   .font-weight-700 { font-weight: 700 !important; }
+   
+/* ── Sidebar Nav (Fully Matched to Neo-Flat Theme) ───────────────── */
+
+/* Overriding the dark navy to match the light brutalist cards */
+:root {
+    --bg-sidebar: #FFFFFF; 
+}
+
+[data-testid="stSidebar"] {
+    background-color: var(--bg-sidebar) !important;
+    border-right: 4px solid var(--txt-primary) !important; /* Thicker brutalist border */
+}
+
+/* Update logo to dark text and heavy border */
+.sidebar-logo {
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    color: var(--txt-primary) !important; /* Changed from White */
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    padding: 18px 12px !important;
+    border-bottom: 4px solid var(--txt-primary) !important; /* Solid flat border instead of transparent */
+    margin-bottom: 20px !important;
+    animation: logoDrop var(--t-fluid) backwards;
+}
+
+/* Force all standard text, labels, and widget values in the sidebar to use the primary dark color */
+[data-testid="stSidebar"] p, 
+[data-testid="stSidebar"] span, 
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] {
+    color: var(--txt-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* Quick Controls / Sliders text overrides for the sidebar */
+[data-testid="stSidebar"] .stSlider div[data-testid="stMarkdownContainer"] p {
+    font-family: 'JetBrains Mono', monospace !important;
+    color: var(--rust) !important; /* Keeps your metric values red, but readable now */
+    font-weight: 800 !important;
+}
+   
+/* Sidebar Buttons overrides (Neo-Flat Brutalist) */
+[data-testid="stSidebar"] button[kind="secondary"],
+[data-testid="stSidebar"] button[kind="primary"] {
+    background-color: var(--bg-card) !important; /* Solid white background */
+    border: 2px solid var(--txt-primary) !important;
+    color: var(--txt-primary) !important;
+    border-radius: var(--radius-btn) !important;
+    font-weight: 700 !important;
+    box-shadow: 2px 2px 0px 0px var(--txt-primary) !important;
+    transition: transform var(--t-snap), box-shadow var(--t-snap), background-color var(--t-fluid) !important;
+    margin-bottom: 10px !important;
+    position: relative;
+    overflow: hidden;
+}
+   
+   [data-testid="stSidebar"] button[kind="secondary"]:hover {
+       background-color: rgba(255,255,255,0.05) !important;
+       color: #FFFFFF !important;
+       transform: translateX(4px) !important;
+   }
+   
+   /* Active Sidebar item (Uses Solid Teal Marker) */
+   [data-testid="stSidebar"] button[kind="primary"] {
+       color: #FFFFFF !important;
+       background-color: rgba(134, 188, 189, 0.15) !important;
+       border-left: 6px solid var(--teal) !important;
+   }
+   /* Unselected Hover State */
+[data-testid="stSidebar"] button[kind="secondary"]:hover {
+    background-color: var(--yellow-tint) !important;
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 4px 4px 0px 0px var(--txt-primary) !important;
+}
+
+[data-testid="stSidebar"] button[kind="secondary"]:active {
+    transform: translate(0px, 0px) !important;
+    box-shadow: 0px 0px 0px 0px var(--txt-primary) !important;
+}
+
+/* Active Sidebar item (Solid Teal Highlight) */
+[data-testid="stSidebar"] button[kind="primary"] {
+    color: var(--txt-primary) !important;
+    background-color: var(--teal) !important;
+    border-left: 6px solid var(--txt-primary) !important;
+    font-weight: 900 !important;
+}
+
+[data-testid="stSidebar"] button[kind="primary"]:hover {
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 4px 4px 0px 0px var(--txt-primary) !important;
+    background-color: #92CDCE !important; /* Lighter solid teal */
+}
+   
+   /* ── Page Headers ────────────────────────────────────────────────── */
+   .main-header {
+       margin-bottom: 32px !important;
+       border-bottom: 4px solid var(--txt-primary);
+       padding-bottom: 12px;
+       animation: slideDown 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+   }
+   
+   .page-title {
+       font-size: 34px !important;
+       font-weight: 900 !important;
+       color: var(--txt-primary) !important;
+       text-transform: uppercase;
+       letter-spacing: -0.04em;
+       margin-bottom: 4px;
+   }
+   
+   .page-subtitle {
+       font-size: 15px !important;
+       color: var(--txt-secondary) !important;
+       font-weight: 500 !important;
+   }
+   
+   .section-title {
+       font-size: 18px !important;
+       font-weight: 800 !important;
+       color: var(--txt-primary) !important;
+       margin: 36px 0 16px 0 !important;
+       text-transform: uppercase;
+       display: inline-block;
+       border-bottom: 4px solid var(--yellow);
+       padding-bottom: 2px;
+   }
+   
+   /* ── Metric Cards (Color Theme Integrated) ────────────────────────── */
+   .metric-card {
+       background-color: var(--bg-card) !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-card) !important;
+       padding: 24px !important;
+       box-shadow: var(--flat-shadow-sm) !important;
+       margin-bottom: 16px !important;
+       position: relative !important;
+       transition: transform var(--t-snap), box-shadow var(--t-snap) !important;
+       animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+   }
+   
+   /* Pure Solid Theme Attachments (No Gradients!) */
+   .metric-card.theme-rust   { border-top: 8px solid var(--rust) !important; }
+   .metric-card.theme-yellow { border-top: 8px solid var(--yellow) !important; }
+   .metric-card.theme-sage   { border-top: 8px solid var(--sage) !important; }
+   .metric-card.theme-teal   { border-top: 8px solid var(--teal) !important; }
+   
+   .metric-card:hover {
+       transform: translate(-3px, -3px) !important;
+       box-shadow: var(--flat-shadow-hover) !important;
+   }
+   
+   .metric-card-header {
+       font-size: 12px !important;
+       font-weight: 800 !important;
+       color: var(--txt-secondary) !important;
+       text-transform: uppercase !important;
+       letter-spacing: 0.1em !important;
+       margin-bottom: 16px !important;
+   }
+   
+   .metric-card-value {
+       font-size: 42px !important;
+       font-weight: 900 !important;
+       color: var(--txt-primary) !important;
+       line-height: 1 !important;
+       margin-bottom: 8px !important;
+   }
+   
+   /* ── Standby & Upload Container ──────────────────────────────────── */
+   .standby-container {
+       text-align: center;
+       padding: 80px 24px;
+       background-color: var(--bg-card);
+       border: 4px dashed var(--border-main);
+       border-radius: var(--radius-card);
+       animation: fadeIn var(--t-slow);
+   }
+   
+   .standby-icon {
+       font-size: 56px;
+       margin-bottom: 16px;
+       display: inline-block;
+       animation: pingRotate 2.5s infinite linear;
+   }
+   
+   .standby-title {
+       font-size: 24px;
+       font-weight: 900;
+       color: var(--txt-primary);
+       text-transform: uppercase;
+       letter-spacing: 0.05em;
+   }
+   
+   /* ── Alert Banners (Solid Colors) ────────────────────────────────── */
+   .neon-alert {
+       padding: 16px 20px !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-card) !important;
+       font-weight: 800 !important;
+       font-size: 15px !important;
+       text-transform: uppercase;
+       margin-bottom: 16px !important;
+       box-shadow: var(--flat-shadow-md) !important;
+       animation: shakeAlert 0.5s cubic-bezier(.36,.07,.19,.97) both;
+   }
+   
+   .danger-alert {
+       background-color: var(--rust-tint) !important;
+       color: var(--rust-dark) !important;
+       border-left: 12px solid var(--rust) !important;
+   }
+   
+   .safe-alert {
+       background-color: var(--sage-tint) !important;
+       color: var(--sage-dark) !important;
+       border-left: 12px solid var(--sage) !important;
+   }
+   
+   /* ── Detection Tables ────────────────────────────────────────────── */
+   .detection-table {
+       width: 100% !important;
+       background-color: var(--bg-card) !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-card) !important;
+       border-collapse: separate !important;
+       border-spacing: 0 !important;
+       box-shadow: var(--flat-shadow-sm) !important;
+       overflow: hidden;
+   }
+   
+   .detection-table th {
+       background-color: var(--bg-page) !important;
+       border-bottom: 3px solid var(--txt-primary) !important;
+       padding: 14px 16px !important;
+       text-align: left !important;
+       font-size: 12px !important;
+       font-weight: 800 !important;
+       color: var(--txt-secondary) !important;
+       text-transform: uppercase !important;
+       letter-spacing: 0.05em !important;
+   }
+   
+   .detection-table td {
+       padding: 16px !important;
+       border-bottom: 2px solid var(--border-main) !important;
+       font-size: 14px !important;
+       color: var(--txt-primary) !important;
+       vertical-align: middle !important;
+       background-color: var(--bg-card);
+       transition: background-color var(--t-snap) !important;
+   }
+   
+   .detection-table tr:hover td {
+       background-color: var(--teal-tint) !important;
+   }
+   
+   /* ── Confidence Bars ─────────────────────────────────────────────── */
+   .conf-wrap { display: flex; align-items: center; gap: 10px; }
+   
+   .conf-bar-bg {
+       background-color: var(--bg-page) !important;
+       border: 2px solid var(--border-main);
+       border-radius: var(--radius-pill) !important;
+       height: 12px !important;
+       width: 100px !important;
+       overflow: hidden !important;
+       position: relative;
+   }
+   
+   /* Strictly Solid Fills based on semantic palette */
+   .conf-bar-fill {
+       height: 100% !important;
+       border-right: 2px solid var(--txt-primary); /* Flat end cap */
+       animation: stretchRight 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+       transform-origin: left;
+   }
+   
+   .fill-rust   { background-color: var(--rust) !important; }
+   .fill-yellow { background-color: var(--yellow) !important; }
+   .fill-sage   { background-color: var(--sage) !important; }
+   .fill-teal   { background-color: var(--teal) !important; }
+   
+   /* ── Badges ──────────────────────────────────────────────────────── */
+   .badge {
+       display: inline-block !important;
+       padding: 4px 12px !important;
+       border: 2px solid var(--txt-primary) !important;
+       border-radius: var(--radius-pill) !important;
+       font-size: 12px !important;
+       font-weight: 800 !important;
+       text-transform: uppercase;
+       letter-spacing: 0.04em !important;
+       box-shadow: 2px 2px 0px 0px rgba(45, 55, 72, 1);
+       transition: transform var(--t-snap) !important;
+   }
+   
+   .badge:hover { transform: translate(-1px, -1px) !important; box-shadow: 3px 3px 0px 0px rgba(45, 55, 72, 1); }
+   
+   .badge-rust   { background-color: var(--rust);   color: #FFF; }
+   .badge-yellow { background-color: var(--yellow); color: var(--txt-primary); }
+   .badge-sage   { background-color: var(--sage);   color: var(--txt-primary); }
+   .badge-teal   { background-color: var(--teal);   color: var(--txt-primary); }
+   .badge-pending{ background-color: var(--bg-page); color: var(--txt-secondary); border-style: dashed !important; }
+   
+   /* ── Violation Mini-Cards ────────────────────────────────────────── */
+   .violation-card {
+       padding: 14px 18px !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-card) !important;
+       background-color: var(--bg-card) !important;
+       margin-bottom: 12px !important;
+       display: flex !important;
+       justify-content: space-between !important;
+       align-items: center !important;
+       box-shadow: var(--flat-shadow-sm) !important;
+       transition: transform var(--t-snap), box-shadow var(--t-snap) !important;
+   }
+   
+   .violation-card:hover {
+       transform: translate(-3px, -3px) !important;
+       box-shadow: var(--flat-shadow-hover) !important;
+   }
+   
+   .viol-rust   { border-left: 10px solid var(--rust) !important; }
+   .viol-yellow { border-left: 10px solid var(--yellow) !important; }
+   .viol-sage   { border-left: 10px solid var(--sage) !important; }
+   .viol-teal   { border-left: 10px solid var(--teal) !important; }
+   
+   .viol-pct {
+       font-family: 'JetBrains Mono', monospace;
+       font-weight: 800;
+       font-size: 16px;
+       background-color: var(--bg-page);
+       padding: 2px 8px;
+       border: 2px solid var(--txt-primary);
+   }
+   
+   /* ── License Plates (Neo-Brutalist Styling) ──────────────────────── */
+   .plate-container { display: flex; flex-wrap: wrap; gap: 10px; }
+   
+   .license-plate {
+       background-color: var(--yellow) !important;
+       color: var(--txt-primary) !important;
+       font-family: 'JetBrains Mono', monospace !important;
+       font-weight: 900 !important;
+       font-size: 18px !important;
+       padding: 8px 16px !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-card) !important;
+       display: inline-block !important;
+       box-shadow: var(--flat-shadow-sm) !important;
+       position: relative;
+       transition: transform var(--t-snap) !important;
+   }
+   
+   .license-plate::before { /* Screws simulation */
+       content: "•"; position: absolute; left: 4px; top: 50%; transform: translateY(-50%); font-size: 10px;
+   }
+   .license-plate::after {
+       content: "•"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-size: 10px;
+   }
+   
+   .license-plate:hover {
+       transform: translateY(-4px) rotate(2deg) !important;
+       box-shadow: var(--flat-shadow-md) !important;
+   }
+   
+   /* ── Streamlit UI Overrides (Solid Colors Only) ──────────────────── */
+   
+   /* Primary Button */
+   [data-testid="stButton"] > button[kind="primary"] {
+       background-color: var(--teal) !important;
+       color: var(--txt-primary) !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-btn) !important;
+       font-weight: 800 !important;
+       font-size: 15px !important;
+       text-transform: uppercase;
+       box-shadow: var(--flat-shadow-sm) !important;
+       transition: transform var(--t-snap), box-shadow var(--t-snap) !important;
+   }
+   
+   [data-testid="stButton"] > button[kind="primary"]:hover {
+       transform: translate(-3px, -3px) !important;
+       box-shadow: var(--flat-shadow-md) !important;
+       background-color: #92CDCE !important; /* Lighter solid teal */
+   }
+   
+   [data-testid="stButton"] > button[kind="primary"]:active {
+       transform: translate(0px, 0px) !important;
+       box-shadow: none !important;
+   }
+   
+   /* Secondary Button */
+   [data-testid="stButton"] > button[kind="secondary"] {
+       background-color: var(--bg-card) !important;
+       color: var(--txt-primary) !important;
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-btn) !important;
+       font-weight: 800 !important;
+       box-shadow: var(--flat-shadow-sm) !important;
+       transition: transform var(--t-snap), box-shadow var(--t-snap) !important;
+   }
+   
+   [data-testid="stButton"] > button[kind="secondary"]:hover {
+       transform: translate(-2px, -2px) !important;
+       box-shadow: var(--flat-shadow-md) !important;
+       background-color: var(--bg-page) !important;
+   }
+   
+/* Sliders - Solid logic, fixed tracking glitch */
+[data-testid="stSlider"] [role="slider"] {
+    background-color: var(--teal) !important;
+    border: 3px solid var(--txt-primary) !important;
+    border-radius: 0 !important; /* Square slider thumb */
+    box-shadow: 2px 2px 0px 0px var(--txt-primary) !important;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+[data-testid="stSlider"] [role="slider"]:hover {
+    background-color: var(--yellow) !important;
+    /* Removed the transform completely to prevent the jumping issue */
+    box-shadow: 4px 4px 0px 0px var(--txt-primary) !important;
+    cursor: grab !important;
+}
+
+[data-testid="stSlider"] [role="slider"]:active {
+    cursor: grabbing !important;
+}
+   
+   /* Toggles */
+   [data-testid="stToggle"] [role="switch"][aria-checked="true"] {
+       background-color: var(--teal) !important;
+   }
+   
+   /* Expanders */
+   [data-testid="stExpander"] {
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-card) !important;
+       background-color: var(--bg-card) !important;
+       box-shadow: var(--flat-shadow-sm) !important;
+       margin-bottom: 12px !important;
+   }
+   
+   [data-testid="stExpander"] > details > summary {
+       padding: 16px !important;
+       font-weight: 800 !important;
+       background-color: var(--yellow-tint) !important;
+       border-bottom: 3px solid transparent !important;
+   }
+   
+   [data-testid="stExpander"] > details[open] > summary {
+       border-bottom: 3px solid var(--txt-primary) !important;
+   }
+   
+   /* Inputs */
+   [data-testid="stTextInput"] input,
+   [data-testid="stSelectbox"] select,
+   [data-testid="stNumberInput"] input {
+       border: 3px solid var(--txt-primary) !important;
+       border-radius: var(--radius-btn) !important;
+       background-color: var(--bg-card) !important;
+       color: var(--txt-primary) !important;
+       font-weight: 600 !important;
+       box-shadow: 2px 2px 0px 0px var(--border-main) !important;
+       transition: box-shadow var(--t-snap), border-color var(--t-snap) !important;
+   }
+   
+   [data-testid="stTextInput"] input:focus,
+   [data-testid="stSelectbox"] select:focus {
+       box-shadow: var(--flat-shadow-sm) !important;
+       border-color: var(--teal) !important;
+       outline: none !important;
+   }
+   
+   /* Download / File Uploader */
+   [data-testid="stFileUploader"] {
+       border: 4px dashed var(--txt-primary) !important;
+       background-color: var(--bg-card) !important;
+       border-radius: var(--radius-card) !important;
+   }
+   [data-testid="stFileUploader"]:hover {
+       background-color: var(--sage-tint) !important;
+       border-style: solid !important;
+   }
+   
+   /* Model Inventory Cards */
+   .model-card {
+       background-color: var(--bg-card);
+       border: 3px solid var(--txt-primary);
+       border-radius: var(--radius-card);
+       padding: 20px;
+       margin-bottom: 16px;
+       box-shadow: var(--flat-shadow-sm);
+       position: relative;
+       transition: transform var(--t-snap);
+       animation: slideUp 0.4s ease backwards;
+   }
+   
+   .model-card.theme-rust   { border-left: 12px solid var(--rust); }
+   .model-card.theme-yellow { border-left: 12px solid var(--yellow); }
+   .model-card.theme-sage   { border-left: 12px solid var(--sage); }
+   .model-card.theme-teal   { border-left: 12px solid var(--teal); }
+   
+   .model-card:hover {
+       transform: translate(-4px, 0);
+       box-shadow: var(--flat-shadow-md);
+   }
+   
+   .model-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;}
+   .model-name { font-weight: 900; font-size: 16px; color: var(--txt-primary); text-transform: uppercase; }
+   
+   .model-status {
+       font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: var(--radius-pill);
+       border: 2px solid var(--txt-primary); box-shadow: 2px 2px 0px 0px var(--txt-primary);
+   }
+   .model-status.safe { background-color: var(--sage); color: var(--txt-primary); }
+   .model-status.danger { background-color: var(--rust); color: #FFF; }
+   
+   /* ── EXHAUSTIVE ANIMATION LIBRARY (1500+ value) ─────────────────── */
+   
+   /* Stagger delays automatically injected by python logic */
+   .delay-1 { animation-delay: 0.05s !important; }
+   .delay-2 { animation-delay: 0.10s !important; }
+   .delay-3 { animation-delay: 0.15s !important; }
+   .delay-4 { animation-delay: 0.20s !important; }
+   .delay-5 { animation-delay: 0.25s !important; }
+   
+   .stagger-row {
+       animation: rowEnter 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+   }
+   
+   .animate-flipIn {
+       animation: flipIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
+   }
+   
+   @keyframes rowEnter {
+       from { opacity: 0; transform: translateX(-20px); }
+       to   { opacity: 1; transform: translateX(0); }
+   }
+   
+   @keyframes popIn {
+       from { opacity: 0; transform: scale(0.9) translateY(10px); }
+       to   { opacity: 1; transform: scale(1) translateY(0); }
+   }
+   
+   @keyframes slideDown {
+       from { opacity: 0; transform: translateY(-20px); }
+       to   { opacity: 1; transform: translateY(0); }
+   }
+   
+   @keyframes slideUp {
+       from { opacity: 0; transform: translateY(20px); }
+       to   { opacity: 1; transform: translateY(0); }
+   }
+   
+   @keyframes fadeIn {
+       from { opacity: 0; }
+       to   { opacity: 1; }
+   }
+   
+   @keyframes flipIn {
+       0%   { transform: perspective(400px) rotateX(90deg); opacity: 0; }
+       40%  { transform: perspective(400px) rotateX(-10deg); }
+       70%  { transform: perspective(400px) rotateX(10deg); }
+       100% { transform: perspective(400px) rotateX(0deg); opacity: 1; }
+   }
+   
+   @keyframes pingRotate {
+       0%   { transform: rotate(0deg) scale(1); }
+       50%  { transform: rotate(15deg) scale(1.1); }
+       100% { transform: rotate(0deg) scale(1); }
+   }
+   
+   @keyframes stretchRight {
+       from { transform: scaleX(0); }
+       to   { transform: scaleX(1); }
+   }
+   
+   @keyframes shakeAlert {
+       0%, 100% { transform: translateX(0); }
+       10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+       20%, 40%, 60%, 80% { transform: translateX(4px); }
+   }
+   
+   @keyframes logoDrop {
+       from { opacity: 0; transform: translateY(-100%); }
+       to   { opacity: 1; transform: translateY(0); }
+   }
